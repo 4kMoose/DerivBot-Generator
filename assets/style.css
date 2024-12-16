@@ -1,91 +1,72 @@
 /* Import Montserrat font */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-/* Main styles */
-:root {
-    --primary-color: #00e900;
-    --white-color: #ffffff;
-    --black-color: #000000;
-    --gray-color: #4d4d4d;
+/* Basic styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
 }
 
-/* Override Streamlit's default styles */
-.stApp {
-    font-family: 'Montserrat', sans-serif !important;
+/* Streamlit components */
+.stButton > button {
+    background-color: #00e900;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
 }
 
-/* Header styling */
-.main-header {
-    color: var(--primary-color);
-    font-weight: 700;
+.stButton > button:hover {
+    background-color: #00cc00;
+}
+
+/* Metrics styling */
+.stMetric {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Sidebar styling */
 .css-1d391kg {
-    background-color: var(--black-color);
+    background-color: white;
 }
 
-.sidebar .sidebar-content {
-    background-color: var(--black-color);
-    color: var(--white-color);
-}
-
-/* Button styling */
-.stButton>button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-}
-
-.stButton>button:hover {
-    background-color: #00cc00;
-}
-
-/* Metric styling */
-.stMetric {
-    background-color: var(--black-color);
-    color: var(--white-color);
-    padding: 1rem;
+/* Input fields */
+.stTextInput > div > div > input {
     border-radius: 4px;
 }
 
-.stMetric .metric-value {
-    color: var(--primary-color);
+/* Select boxes */
+.stSelectbox > div > div > select {
+    border-radius: 4px;
 }
 
-/* Chart styling */
+/* Slider */
+.stSlider > div > div > div > div {
+    background-color: #00e900;
+}
+
+/* Charts */
 .js-plotly-plot {
-    background-color: var(--white-color);
-    border-radius: 4px;
-    padding: 1rem;
-}
-
-/* Input fields styling */
-.stSelectbox, .stNumberInput {
-    background-color: var(--white-color);
-    border-radius: 4px;
-}
-
-/* Slider styling */
-.stSlider {
-    color: var(--primary-color);
-}
-
-/* Custom card styling */
-.custom-card {
-    background-color: var(--white-color);
     border-radius: 8px;
-    padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Footer styling */
+/* Footer */
+footer {
+    visibility: hidden;
+}
+
 .footer {
-    color: var(--gray-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
     text-align: center;
     padding: 1rem;
-    font-size: 0.8rem;
+    border-top: 1px solid #eee;
 }
