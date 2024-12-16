@@ -1,0 +1,3 @@
+This directory contains brand assets for EDGEVANTAGE:
+- logo.png: Main application logo
+- favicon.ico: Browser tab icon
