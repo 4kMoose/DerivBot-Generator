@@ -1,13 +1,18 @@
 import streamlit as st
+
+# Page configuration must be the first Streamlit command
+st.set_page_config(
+    page_title="EDGEVANTAGE",
+    page_icon="https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Logo_icon.png",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from streamlit_option_menu import option_menu
-
-# Load custom CSS
-with open('assets/style.css') as f:
-    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Hide Streamlit's default menu and footer
 st.markdown("""
@@ -20,13 +25,12 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Page configuration
-st.set_page_config(
-    page_title="EDGEVANTAGE",
-    page_icon="https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Logo_icon.png",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# Load custom CSS
+try:
+    with open('assets/style.css') as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+except FileNotFoundError:
+    st.warning("Style file not found. Using default styling.")
 
 # Sidebar navigation
 with st.sidebar:
