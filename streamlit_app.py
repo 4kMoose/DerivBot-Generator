@@ -4,8 +4,6 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from streamlit_option_menu import option_menu
-from streamlit_custom_notification import custom_notification
-import streamlit.components.v1 as components
 
 # Load custom CSS
 with open('assets/style.css') as f:
@@ -17,6 +15,8 @@ st.markdown("""
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     .stDeployButton {display: none;}
+    /* Import Font Awesome */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
     </style>
 """, unsafe_allow_html=True)
 
@@ -28,11 +28,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Add Font Awesome CSS
-st.markdown("""
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    """, unsafe_allow_html=True)
-
 # Sidebar navigation
 with st.sidebar:
     # Center the logo in the sidebar
@@ -43,10 +38,10 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)  # Add some spacing
     
     selected = option_menu(
-        menu_title=None,  # Remove menu title for cleaner look
+        menu_title=None,
         options=["Dashboard", "Strategy Builder", "Backtest", "Settings"],
         icons=["house", "gear", "graph-up", "sliders"],
-        menu_icon=None,  # Remove menu icon
+        menu_icon=None,
         default_index=0,
         styles={
             "container": {"padding": "0!important", "background-color": "#000000"},
