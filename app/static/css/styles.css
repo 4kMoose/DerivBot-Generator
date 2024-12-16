@@ -1,0 +1,65 @@
+.component-item {
+    transition: all 0.3s ease;
+}
+
+.component-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.configured-component {
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    background-color: white;
+}
+
+.configured-component:hover {
+    border-color: #4299e1;
+}
+
+#strategy-canvas {
+    min-height: 600px;
+    transition: all 0.3s ease;
+}
+
+#strategy-canvas.drag-over {
+    background-color: #f7fafc;
+    border-color: #4299e1;
+}
+
+.component-config {
+    margin-top: 0.5rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 0.5rem;
+}
+
+.component-config input,
+.component-config select {
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.component-config input:focus,
+.component-config select:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.modal {
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}

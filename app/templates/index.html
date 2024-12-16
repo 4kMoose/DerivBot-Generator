@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBot Strategy Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-blue-600 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold">DBot Strategy Generator</h1>
+                <div class="space-x-4">
+                    <button class="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded" id="saveBtn">Save Strategy</button>
+                    <button class="bg-green-500 hover:bg-green-700 px-4 py-2 rounded" id="deployBtn">Deploy</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-6 grid grid-cols-12 gap-6">
+            <!-- Strategy Builder Panel -->
+            <div class="col-span-3 bg-white rounded-lg shadow p-4">
+                <h2 class="text-xl font-bold mb-4">Components</h2>
+                <div id="components-list" class="space-y-2">
+                    <div class="component-item bg-gray-100 p-2 rounded cursor-move" draggable="true" data-type="indicator">
+                        Moving Average
+                    </div>
+                    <div class="component-item bg-gray-100 p-2 rounded cursor-move" draggable="true" data-type="indicator">
+                        RSI
+                    </div>
+                    <div class="component-item bg-gray-100 p-2 rounded cursor-move" draggable="true" data-type="indicator">
+                        MACD
+                    </div>
+                    <div class="component-item bg-gray-100 p-2 rounded cursor-move" draggable="true" data-type="condition">
+                        Price Crossover
+                    </div>
+                    <div class="component-item bg-gray-100 p-2 rounded cursor-move" draggable="true" data-type="action">
+                        Buy Market
+                    </div>
+                    <div class="component-item bg-gray-100 p-2 rounded cursor-move" draggable="true" data-type="action">
+                        Sell Market
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy Canvas -->
+            <div class="col-span-6 bg-white rounded-lg shadow p-4">
+                <h2 class="text-xl font-bold mb-4">Strategy Canvas</h2>
+                <div id="strategy-canvas" class="min-h-[600px] border-2 border-dashed border-gray-300 rounded p-4">
+                    <!-- Strategy components will be dropped here -->
+                </div>
+            </div>
+
+            <!-- Properties Panel -->
+            <div class="col-span-3 bg-white rounded-lg shadow p-4">
+                <h2 class="text-xl font-bold mb-4">Properties</h2>
+                <div id="properties-panel">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Risk Tolerance</label>
+                            <input type="range" min="1" max="10" class="w-full" id="riskTolerance">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Trading Session</label>
+                            <select class="w-full border rounded p-2" id="tradingSession">
+                                <option value="asian">Asian</option>
+                                <option value="european">European</option>
+                                <option value="american">American</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Asset Class</label>
+                            <select class="w-full border rounded p-2" id="assetClass">
+                                <option value="forex">Forex</option>
+                                <option value="crypto">Cryptocurrency</option>
+                                <option value="commodities">Commodities</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backtesting Results Modal -->
+        <div id="backtestModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+            <div class="relative top-20 mx-auto p-5 border w-3/4 shadow-lg rounded-md bg-white">
+                <div class="mt-3">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">Backtesting Results</h3>
+                    <div class="mt-2">
+                        <div id="backtestResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/strategy-builder.js"></script>
+</body>
+</html>
