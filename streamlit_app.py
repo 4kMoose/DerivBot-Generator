@@ -4,6 +4,10 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
+# Initialize session state
+if 'strategy_count' not in st.session_state:
+    st.session_state.strategy_count = 0
+
 # Page configuration
 st.set_page_config(
     page_title="DBot Strategy Generator",
@@ -64,27 +68,57 @@ with col1:
     st.header("Strategy Preview")
     
     # Generate sample data for visualization
+    np.random.seed(42)  # For reproducible results
     dates = pd.date_range(start='2024-01-01', end='2024-12-31', freq='D')
-    prices = np.random.randn(len(dates)).cumsum() + 100
+    base_price = 100
+    noise = np.random.normal(0, 1, len(dates))
+    trend = np.linspace(0, 10, len(dates))
+    prices = base_price + trend + noise.cumsum()
+    
+    # Create candlestick data
+    opens = prices + np.random.normal(0, 0.5, len(dates))
+    highs = np.maximum(opens, prices) + np.random.uniform(0, 1, len(dates))
+    lows = np.minimum(opens, prices) - np.random.uniform(0, 1, len(dates))
+    closes = prices + np.random.normal(0, 0.5, len(dates))
     
     # Create candlestick chart
     fig = go.Figure(data=[go.Candlestick(
         x=dates,
-        open=prices + np.random.randn(len(dates)),
-        high=prices + np.random.randn(len(dates)) + 1,
-        low=prices + np.random.randn(len(dates)) - 1,
-        close=prices + np.random.randn(len(dates))
+        open=opens,
+        high=highs,
+        low=lows,
+        close=closes
     )])
     
     # Add indicators if enabled
     if ma_enabled:
-        ma = pd.Series(prices).rolling(window=ma_period).mean()
-        fig.add_trace(go.Scatter(x=dates, y=ma, name=f'{ma_period} MA'))
+        ma = pd.Series(closes).rolling(window=ma_period).mean()
+        fig.add_trace(go.Scatter(x=dates, y=ma, name=f'{ma_period} MA', line=dict(color='blue')))
+    
+    if rsi_enabled:
+        # Simple RSI calculation for demo
+        delta = pd.Series(closes).diff()
+        gain = (delta.where(delta > 0, 0)).rolling(window=rsi_period).mean()
+        loss = (-delta.where(delta < 0, 0)).rolling(window=rsi_period).mean()
+        rs = gain / loss
+        rsi = 100 - (100 / (1 + rs))
+        
+        # Add RSI in a subplot
+        fig.add_trace(go.Scatter(x=dates, y=rsi, name='RSI', yaxis="y2"))
+        fig.update_layout(
+            yaxis2=dict(
+                title="RSI",
+                overlaying="y",
+                side="right",
+                range=[0, 100]
+            )
+        )
     
     fig.update_layout(
         title="Strategy Visualization",
         yaxis_title="Price",
-        xaxis_title="Date"
+        xaxis_title="Date",
+        height=600
     )
     
     st.plotly_chart(fig, use_container_width=True)
@@ -113,26 +147,58 @@ st.header("Backtest Results")
 if st.button("Run Backtest"):
     with st.spinner("Running backtest..."):
         # Simulate backtest results
-        st.success("Backtest completed!")
+        st.session_state.strategy_count += 1
+        
+        # Generate random but realistic-looking backtest results
+        total_trades = np.random.randint(50, 150)
+        win_rate = np.random.uniform(0.4, 0.7)
+        profit_factor = np.random.uniform(1.1, 2.0)
+        max_drawdown = np.random.uniform(0.1, 0.3)
         
         # Display metrics
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Total Trades", "100")
+            st.metric("Total Trades", f"{total_trades}")
         with col2:
-            st.metric("Win Rate", "60%")
+            st.metric("Win Rate", f"{win_rate:.1%}")
         with col3:
-            st.metric("Profit Factor", "1.5")
+            st.metric("Profit Factor", f"{profit_factor:.2f}")
         with col4:
-            st.metric("Max Drawdown", "15%")
+            st.metric("Max Drawdown", f"{max_drawdown:.1%}")
         
-        # Sample equity curve
-        equity_curve = np.random.randn(100).cumsum()
-        st.line_chart(equity_curve)
+        # Generate equity curve
+        trades = np.random.normal(0.002, 0.005, total_trades)
+        equity_curve = (1 + trades).cumprod()
+        
+        # Plot equity curve
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            y=equity_curve,
+            mode='lines',
+            name='Equity Curve',
+            line=dict(color='green')
+        ))
+        fig.update_layout(
+            title="Equity Curve",
+            yaxis_title="Equity Growth",
+            xaxis_title="Trade Number",
+            showlegend=True
+        )
+        st.plotly_chart(fig, use_container_width=True)
 
 # Deploy section
 st.header("Deploy Strategy")
 if st.button("Deploy to DBot"):
-    # Add your deployment logic here
-    st.success("Strategy deployed successfully! You can now use it in DBot.")
-    st.info("Note: This is a demo version. Actual deployment requires Deriv API credentials.")
+    # Simulated deployment
+    with st.spinner("Deploying strategy..."):
+        st.success("Strategy deployed successfully! You can now use it in DBot.")
+        st.info("""
+        Note: This is a demo version. In the full version, this would:
+        1. Connect to your Deriv account
+        2. Upload the strategy to DBot
+        3. Start automated trading
+        """)
+
+# Add a footer with version info
+st.markdown("---")
+st.markdown("DBot Strategy Generator v1.0 - Demo Version")
