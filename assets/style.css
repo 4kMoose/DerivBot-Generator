@@ -6,6 +6,18 @@ body {
     background-color: white;
 }
 
+/* Banner styling */
+.banner-container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.banner-container img {
+    width: 100%;
+    display: block;
+}
+
 /* Montserrat font classes */
 .montserrat-heading {
     font-family: "Montserrat", sans-serif;
@@ -65,11 +77,46 @@ body {
     background-color: #00cc00 !important;
 }
 
+/* Links styling */
+a {
+    color: #00e900 !important;
+    text-decoration: none !important;
+    transition: color 0.3s !important;
+}
+
+a:hover {
+    color: #00cc00 !important;
+}
+
 /* Input fields */
 .stTextInput > div > div > input,
 .stSelectbox > div > div > select {
     border-radius: 4px !important;
     border: 1px solid #eee !important;
+}
+
+/* Dropdown styling */
+.stSelectbox > div > div > div[data-baseweb="select"] > div {
+    background-color: white !important;
+    border: 1px solid #eee !important;
+}
+
+.stSelectbox [role="listbox"] {
+    background-color: white !important;
+}
+
+.stSelectbox [role="option"] {
+    background-color: white !important;
+    color: black !important;
+}
+
+.stSelectbox [role="option"]:hover {
+    background-color: #f5f5f5 !important;
+}
+
+/* Dropdown button color */
+.stSelectbox [data-baseweb="select"] svg {
+    color: black !important;
 }
 
 /* Metrics styling */
@@ -83,6 +130,17 @@ body {
 /* Slider */
 .stSlider > div > div > div > div {
     background-color: #00e900 !important;
+}
+
+/* Slider track */
+.stSlider > div > div > div[data-baseweb="slider"] {
+    background-color: #e0e0e0 !important;
+}
+
+/* Slider thumb */
+.stSlider > div > div > div[data-baseweb="slider"] > div[role="slider"] {
+    background-color: #00e900 !important;
+    border-color: #00e900 !important;
 }
 
 /* Charts */
