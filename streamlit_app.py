@@ -3,69 +3,37 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from streamlit_option_menu import option_menu
 
 # Page configuration
 st.set_page_config(
     page_title="EDGEVANTAGE",
     page_icon="https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Logo_icon.png",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
-# Basic page styling
+# Hide sidebar and menu
 st.markdown("""
     <style>
-    .stApp {
-        background-color: white;
-    }
-    .main-header {
-        color: #00e900;
-        font-family: 'Montserrat', sans-serif;
-        font-weight: bold;
-    }
-    .stButton > button {
-        background-color: #00e900;
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-    }
-    .stButton > button:hover {
-        background-color: #00cc00;
-    }
+    #MainMenu {visibility: hidden;}
+    .css-1rs6os {visibility: hidden;}
+    .css-17ziqus {visibility: hidden;}
+    .css-1dp5vir {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar
-with st.sidebar:
-    # Logo
-    st.image("https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Logotype.png", width=200)
-    
-    # Navigation
-    selected = option_menu(
-        menu_title=None,
-        options=["Dashboard", "Strategy Builder", "Backtest", "Settings"],
-        icons=["house", "gear", "graph-up", "sliders"],
-        menu_icon=None,
-        default_index=0,
-        styles={
-            "container": {"padding": "0!important", "background-color": "white"},
-            "icon": {"color": "#00e900", "font-size": "20px"},
-            "nav-link": {
-                "font-size": "16px",
-                "text-align": "left",
-                "margin": "0px",
-                "color": "#4d4d4d"
-            },
-            "nav-link-selected": {"background-color": "#00e900", "color": "white"},
-        }
-    )
+# Banner at the top
+st.image("https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Banner.png", use_column_width=True)
 
-# Banner under sidebar
-st.image("https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Layout.png", use_column_width=True)
+# Main content
+st.markdown("""
+    <div class="main-content">
+        <h2 class="montserrat-heading">Strategy Builder</h2>
+    </div>
+""", unsafe_allow_html=True)
 
-# Strategy Components
+# Strategy Components in a modern card layout
+st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("Strategy Components")
 col1, col2, col3 = st.columns(3)
 
@@ -81,8 +49,10 @@ with col3:
         "Asset Class",
         ["Forex", "Crypto", "Commodities"]
     )
+st.markdown('</div>', unsafe_allow_html=True)
 
-# Moving Average Settings
+# Technical Indicators
+st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("Technical Indicators")
 ma_enabled = st.checkbox("Enable Moving Average")
 if ma_enabled:
@@ -91,8 +61,10 @@ if ma_enabled:
         ma_period = st.number_input("MA Period", 5, 200, 14)
     with col2:
         ma_type = st.selectbox("MA Type", ["Simple", "Exponential"])
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Chart
+st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("Strategy Preview")
 dates = pd.date_range(start='2024-01-01', periods=100, freq='D')
 prices = 100 + np.random.randn(100).cumsum()
@@ -124,8 +96,22 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Settings Section
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.subheader("Settings")
+col1, col2 = st.columns(2)
+with col1:
+    st.selectbox("Theme", ["Light", "Dark"])
+    st.selectbox("Chart Style", ["Modern", "Classic"])
+with col2:
+    st.selectbox("Time Zone", ["UTC", "Local"])
+    st.selectbox("Currency", ["USD", "EUR", "GBP"])
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Backtest Results
+st.markdown('<div class="card">', unsafe_allow_html=True)
 st.subheader("Backtest Results")
 if st.button("Run Backtest"):
     with st.spinner("Running backtest..."):
@@ -156,7 +142,11 @@ if st.button("Run Backtest"):
             paper_bgcolor='white'
         )
         st.plotly_chart(equity_fig, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
-st.markdown("---")
-st.markdown("EDGEVANTAGE v1.0 2024 | Powered by Advanced Trading Algorithms")
+st.markdown("""
+    <div class="footer">
+        <p class="montserrat-footer">EDGEVANTAGE v1.0 2024 | Powered by Advanced Trading Algorithms</p>
+    </div>
+""", unsafe_allow_html=True)
