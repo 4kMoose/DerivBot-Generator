@@ -23,7 +23,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Banner at the top
+st.markdown('<div class="banner-container">', unsafe_allow_html=True)
 st.image("https://raw.githubusercontent.com/4kMoose/EdgeVantage/main/EDGEVANTAGE%20-%20Banner.png", use_column_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Main content
 st.markdown("""
